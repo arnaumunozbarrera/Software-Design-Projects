@@ -2,7 +2,7 @@
 ### Autor: 
 Arnau Muñoz Barrera 
 
-Software Design Patters & Principles.
+Software Design Patterns & Principles.
 
 ### Prerequisites
 - An IDE like IntelliJ IDEA or Visual Studio Code.
