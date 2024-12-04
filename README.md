@@ -1,4 +1,4 @@
-# Software-Design-Projects
+# Software Design Projects
 ### Autor: 
 Arnau Muñoz Barrera 
 
