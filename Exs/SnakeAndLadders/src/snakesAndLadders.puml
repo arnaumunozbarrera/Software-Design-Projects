@@ -1,0 +1,108 @@
+@startuml 
+skinparam classAttributeIconSize 0
+' this is to use the standard notation for public, protected, private
+
+class Main {
+- {static} NUM_SQUARES : int
+- {static} PLAYER_NAMES : String[]
+- {static} FROM_TO : int[][]
+- {static} DEATH_SQUARES : int[]
+- {static} main(String[] args)
+}
+
+class Game {
+    + Game(playerNames: String[], numSquares : int, \n\t    toFrom : int[][], deathSquares : int[])
+    + play()
+    - makeBoard(numSquares : int, \n\t\t  toFrom : int[][], deathSquares : int[])
+    - makePlayers(names : String[])
+    - initializeGame()
+    - placePlayersAtFirstSquare()
+    - notOver() : boolean
+    - playerAlive() : boolean
+    - movePlayer(roll : int)
+    - currentPlayer() : Player
+}
+
+class Board {
+    - {static} MIN_NUM_SQUARES : int
+    + Board(numSquares : int, toFrom : int[][], deathSquares : int[])
+    + firstSquare() : Square
+    + lastSquare() : Square
+    + findSquare(position : int) : Square
+    + numberOfSquares() : int
+    - makeSquares(numSquares : int)
+    - makeSnakesOrLadders(toFrom : int[][])
+    - makeDeaths(deathSquares : int[])
+}
+
+class Die {
+    - {static} MIN_VALUE : int = 1
+    - {static} MAX_VALUE : int = 6
+    + roll() : int
+}
+
+class Square {
+    # player : Player
+    # position : int
+    # board : Board
+    + Square(pos : int, board : Board)
+    + getPosition() : int
+    + isLastSquare() : boolean
+    + enter(p : Player)
+    + leave(p : Player)
+    + isOccupied() : boolean
+    + moveAndLand(moves : int)
+    # landHereOrGoHome() : Square
+    # findRelativeSquare(moves : int) : Square
+    # findFirstSquare() : Square
+}
+
+class Player {
+- name : String
+- square : Square
+- dead : Boolean
++ isDead(dead : boolean)
++ setDead(dead : boolean)
++ Player(name : String)
++ setSquare (square : Square)
++ getName() : String
++ getPosition() : int
++ toString() : String
++ moveForward(moves : int)
++ wins() : boolean
+}
+
+class SnakeOrLadder extends Square {
+    - transport : int
+    + SnakeOrLadder(position : int, b : Board, trans : int)
+    # landHereOrGoHome() : Square
+    - destination() : Square
+}
+
+
+class FirstSquare extends Square {
+    + FirstSquare(board : Board)
+    + isOccupied() : boolean
+    + enter(p : Player)
+    + leave(p : Player)
+}
+
+class death extends Square {
+    + Death(position : int, board : Board)
+    + enter(p : Player)
+}
+
+' relative position of classes not related by association
+' or composition with hidden arrows
+Main -[hidden]right-> Game
+Game -[hidden]down-> Die
+
+'associations
+Game x--right--> "1" Board : board
+Board "1\nboard" *-down-> "10...*" Square : squares
+Game *-down-> "1..*" Player : players
+Game x-down-> "0,1" Player : winner
+Square -left-> "0,1" Player : player
+Player -right-> "1" Square : square
+FirstSquare -left-> "*" Player : players
+@enduml
