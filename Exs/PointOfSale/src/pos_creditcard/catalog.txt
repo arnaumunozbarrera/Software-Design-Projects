@@ -1,0 +1,7 @@
+Coca-cola        : 1.20
+Nestea           : 1.50
+Moritz           : 1.90
+Aigua de Ribes   : 1.10
+Olives Espinaler : 1.90
+Patates Lays     : 2.05
+Trina            : 1.35

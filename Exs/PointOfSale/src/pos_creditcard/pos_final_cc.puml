@@ -1,0 +1,103 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam classAttributeIconSize 0
+
+class Main {
+{static} main(args:String[])
+}
+
+class PointOfSale {
+- idLastSale : int
+- catalogFileName : String
++ makeNewSale() : int
++ addLineItemToSale(idSale : int, \n\tprodName : String, qty : int)
++ printReceiptOfSale(saleId : int)
++ payOneSaleCash(saleId : int, amountHanded : double)
++ payOneSaleCash(saleId : int, ccnumber : String)
++ printPayment(saleId : int)
+- searchSaleById(int id) : Sale
+}
+
+class ProductCatalog {
++ ProductCatalog(fileName : String)
++ searchByName(name : String) : ProductSpecification
+- addProductSpecification(name : String, price : double)
+}
+
+note left of ProductCatalog::ProductCatalog {
+text file with
+Coca-cola 1.20
+Nestea    1.50
+Moritz    1.90
+...
+}
+
+class ProductSpecification {
+- price : double
+- name : String
+}
+
+class Sale {
+- id : int
+- dateTime : LocalDateTime
++ Sale(id : int)
++ addLineItem(prodSpec : ProductSpecification, qty : int)
++ payCash(amountHanded : double)
++ payCreditCard(amountToPay : double, ccnumber : String)
++ printPayment()
++ total() : double
++ printReceipt()
+
+}
+
+class SaleLineItem {
+- quantity : int
++ incrementQuantity()
++ subtotal() : double
++ print()
+}
+
+abstract class Payment {
+  # amountToPay : double
+  + Payment(amountToPay : double)
+  + {abstract} pay()
+  + {abstract} print()
+}
+
+class PaymentInCash extends Payment {
+  - amount : double
+  + PaymentInCash(amountToPay : double)
+  + print()
+  - change(totalSale : double) : double
+}
+
+Sale --> "0,1" Payment : payment
+
+
+class PaymentCreditCard extends Payment {
+  - ccnumber : String
+  - authorized : boolean  
+  + PaymentCreditCard(ccnumber : int, \n\tamountToPay : double)
+  + print()
+  - authorize() : boolean
+}
+
+class Cash{
+    - CurrentCash : HashMap<Double, Integer>
+    - Coins : List<Double>
+    - CoinsReverted : List<Double>
+    + subCash(money : HashMap<Double, Integer>)
+    + addCash(money : double[], quantity : int[])
+    + printCash()
+    + ChangeGreedy(totalAmount : double)
+    + ChangeRandom(totalAmount : double)
+    + Cash()
+    - getRandom()
+}
+PointOfSale o--> "*" Sale : sales
+Sale *--> "*" SaleLineItem : saleLineItems
+SaleLineItem --> "1" ProductSpecification : productSpecification
+PointOfSale --> "1" ProductCatalog : productCatalog
+ProductCatalog o--> " * " ProductSpecification : productSpecifications
+
+@enduml
