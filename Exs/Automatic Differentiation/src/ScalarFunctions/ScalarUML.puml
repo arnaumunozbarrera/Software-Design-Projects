@@ -1,0 +1,41 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam classAttributeIconSize 0
+
+class DualNumber {
+}
+
+interface Function {
+}
+
+class Main {
+{static} main(args:String[])
+}
+
+abstract class  UnaryOperator implements Function {
+}
+
+class Multiply extends BinaryOperator {
+}
+
+class Sin extends UnaryOperator {
+}
+
+class Subscript extends UnaryOperator {
+}
+
+class X implements Function{
+}
+
+abstract class BinaryOperator implements Function {
+}
+
+class Sum extends BinaryOperator {
+}
+
+class Constant implements Function {
+}
+
+UnaryOperator *--> Function : " 2 left, right"
+
+@enduml

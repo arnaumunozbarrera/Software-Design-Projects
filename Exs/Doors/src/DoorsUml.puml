@@ -1,0 +1,61 @@
+@startuml
+'https://plantuml.com/class-diagram
+skinparam classAttributeIconSize 0
+
+class Door {
+ -id : string
+    - codeHandler: CodeHandler
+    - locked : boolean
+    - numTrials : int
+    + resetState()
+    + processCode(code : string)
+    + setCodeHandler(ch : CodeHanlder)
+    +open()
+}
+
+abstract class CodeHandler {
+    #next_handler : CodeHandler
+    +handleCode(code : string, door : Door)
+}
+
+class FireAlarm {
+    -code : string
+    +handleCode(code : string, door : Door)
+}
+
+class Log {
+    +handleCode(code : string, door : Door)
+}
+
+class Open {
+    -code : string
+    +handleCode(code : string, door : Door)
+}
+
+class Lock{
+    +handleCode(code : string, door : Door)
+}
+
+class EntryLog{
+    - code: string;
+    - time: LocalDateTime;
+    - doorId: string;
+    - isLocked : boolean;
+    + toString()
+}
+
+class Unlock {
+    -code : string
+    +handleCode(code : string, door : Door)
+}
+
+Door --> CodeHandler : handler
+CodeHandler --> EntryLog : registro
+CodeHandler <|-- FireAlarm
+CodeHandler <|-- Log
+CodeHandler <|-- Open
+CodeHandler <|-- Lock
+CodeHandler <|-- Unlock
+CodeHandler --> "0..1" CodeHandler : next_handler
+
+@enduml
