@@ -1,0 +1,15 @@
+En aquest exercici haviem d'implementar el patró de disseny prototype, per aconseguir-ho hem hagut de crear 
+una classe FactorySprites amb un atribut make(event_type) que retorna un objecte GameSprite que pot ser Bird, 
+Cloud, Mountain... entre d'altres. Aixó es possible ja que es crida al mètode abstracte clone() de la classe GameSprites. 
+També hem modificat alguns dels mètodes de la classe Game per no modificar-la cada vegada que volem afegir un 
+nou objecte. Hem creat dos tipus de grups d'objectes(sprites) en Game, els flying_sprites i els landscape_sprites.
+Hem actualitzat els diferents mètode de Game per aquests dos atributs que engloben els elements de background i 
+els elements interactius. En el mètode process_event(), cridem al mètode de la classe FactorySprites make 
+i li passem el nùmero d'event per parametre per obtenir l'objecte concret i l'afegim a la llista de sprites. 
+El constructor de FactorySprites també s'encarrega d'assignar el periode corresponen amb el tipus d'objecte 
+concret. 
+Per últim, en el main hem hagut de declarar els diferents tipus d'events i hem declarat diferents FactorySprites 
+(factory_landscapes i factory_flying) amb diferents objectes i periodes segons la dificultat que es seleccioni
+abans de començar el joc.  
+
+
