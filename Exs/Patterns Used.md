@@ -13,7 +13,7 @@ simulates the chain of command between certain objects like a fire alarm and a l
 
 # COMPOSITE
 ### Automatic differentiation:
-is an exercise based on us
+is an exercise based on calculating math operations treating a single component as part of a family component, each component of the same family is treated equally.
 
 # SINGLETON 
 ### Pygame:
